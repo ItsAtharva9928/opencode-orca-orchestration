@@ -97,7 +97,7 @@ Feed [`INSTALL_PROMPT.md`](INSTALL_PROMPT.md) directly to OpenCode, Claude Code,
 ### Option 2: Automated Script (Linux, macOS, WSL)
 Run the POSIX installer:
 ```bash
-git clone https://github.com/your-username/opencode-orca-orchestration.git
+git clone https://github.com/ItsAtharva9928/opencode-orca-orchestration.git
 cd opencode-orca-orchestration
 chmod +x install.sh
 ./install.sh
@@ -111,7 +111,7 @@ Flags available:
 ### Option 3: PowerShell Script (Windows)
 Run from PowerShell:
 ```powershell
-git clone https://github.com/your-username/opencode-orca-orchestration.git
+git clone https://github.com/ItsAtharva9928/opencode-orca-orchestration.git
 cd opencode-orca-orchestration
 .\install.ps1
 ```
