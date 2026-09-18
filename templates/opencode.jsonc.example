@@ -1,0 +1,118 @@
+{
+  // JSON Schema for OpenCode configuration validation
+  "$schema": "https://opencode.ai",
+
+  // Global instructions loaded into the session
+  // Points to the Two-Tier Orchestration contract
+  "instructions": [
+    "~/.config/opencode/ORCHESTRATION.md"
+  ],
+
+  // Default lead model for the primary session (Project Orchestrator)
+  "model": "openai/gpt-5.6-sol",
+
+  // Permissions configuration
+  // Allows necessary tools while enforcing strict safety boundaries on dangerous bash commands
+  "permission": {
+    "read": "allow",
+    "edit": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "task": "allow",
+    "skill": "allow",
+    "todowrite": "allow",
+    "question": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "doom_loop": "allow",
+    "external_directory": {
+      "*": "allow"
+    },
+    "bash": {
+      "*": "allow",
+      "*rm -rf *": "deny",
+      "*rm -r *": "deny",
+      "*rmdir *": "deny",
+      "*git reset --hard*": "deny",
+      "*git clean -f*": "deny",
+      "*git push *--force*": "deny",
+      "*git push *-f *": "deny",
+      "*git push *-f": "deny",
+      "*mkfs*": "deny",
+      "*dd if=*": "deny",
+      "*format *": "deny",
+      "*:(){ :|:& };:*": "deny"
+    }
+  },
+
+  // Built-in subagent configuration overrides
+  "agent": {
+    "build": {
+      "variant": "medium"
+    },
+    "plan": {},
+    "general": {},
+    "explore": {
+      "model": "google/antigravity-gemini-3.7-flash",
+      "variant": "medium"
+    },
+    "compaction": {},
+    "title": {},
+    "summary": {}
+  },
+
+  // Providers configuration
+  // Configure credentials, model IDs, context limits, and reasoning effort variants
+  "provider": {
+    // OpenAI provider settings (or OAuth)
+    "openai": {
+      "options": {
+        "reasoningEffort": "medium",
+        "reasoningSummary": "auto",
+        "textVerbosity": "medium",
+        "store": false
+      },
+      "models": {
+        "gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol (Project Lead Orchestrator)",
+          "variants": {
+            "low": { "reasoningEffort": "low", "reasoningSummary": "auto" },
+            "medium": { "reasoningEffort": "medium", "reasoningSummary": "auto" },
+            "high": { "reasoningEffort": "high", "reasoningSummary": "detailed" }
+          }
+        },
+        "gpt-5.6-luna": {
+          "name": "GPT-5.6 Luna (Fast Worker Subagent)",
+          "variants": {
+            "low": { "reasoningEffort": "low", "reasoningSummary": "auto" }
+          }
+        }
+      }
+    },
+
+    // OpenRouter provider configuration (e.g. for Gemini Flash models)
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "${OPENROUTER_API_KEY}"
+      },
+      "models": {
+        "google/antigravity-gemini-3.8-flash": {
+          "name": "Gemini 3.8 Flash (Worker Gemini & Code Reviewer)"
+        },
+        "google/antigravity-gemini-3.7-flash": {
+          "name": "Gemini 3.7 Flash (Tester & Researcher)"
+        }
+      }
+    }
+  },
+
+  // Recommended authentication and utility plugins
+  "plugin": [
+    "opencode-openai-codex-auth",
+    "@cortexkit/opencode-antigravity-auth@latest"
+  ]
+}

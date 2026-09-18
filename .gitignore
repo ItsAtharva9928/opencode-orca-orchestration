@@ -1,0 +1,19 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backups
+*.bak*
+*.old
+
+# Node / Bun
+node_modules/
+package-lock.json
+bun.lock
+bun.lockb
+
+# Local secret configs
+*.local.json*
+.env
+.env.*
+!.env.example
